@@ -1,0 +1,101 @@
+---
+title: "PSTAT 174 HW 3"
+author: "Idris Rasheed"
+date: "April 26, 2017"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+###Problem 6A
+####i. 100 simulations
+```{r 6Ai}
+#Assigns model 1 to arima simulation with phi  -.6 and theta = 1.2
+model1 <- arima.sim(n = 100,model = list(ar = -0.6,ma = 1.2)) 
+plot(model1, xlab = "t",ylab = expression(X[t]),main = expression(paste(ARMA(1,1),phi == -0.6,theta == 1.2,sep = " "))) #Plots time series 
+```
+
+####ii. Theoritical ACF and PACF
+```{r 6Aii}
+#Computes and outputs ACF and PACF values
+acf_model1 = ARMAacf(ar = -0.6,ma = 1.2,pacf = FALSE,lag.max = 10)
+pacf_model1 = ARMAacf(ar = -0.6,ma = 1.2,pacf = TRUE,lag.max = 10)
+acf_model1
+pacf_model1
+
+# Plot
+graph <- par(mfrow = c(1,2)) #Combines plots
+# Plots ACF 
+plot(x = 0:10,y = acf_model1,type = "h",col = "red",ylab = "ACF",xlab = "h")
+abline(h = 0)
+#Plots PACF from h = 0 
+plot(x = 1:10,y = pacf_model1,type = "h",col = "red",ylab = "PACF",xlab = "h")
+abline(h = 0)
+title(expression(paste("Theoritical ARMA(1,1)",phi == -0.6,theta == 1.2,sep = " ")),
+line = -1, outer=TRUE)
+#Plots ACF and PACF on one graph
+par(graph)
+
+```
+####iii. Sample ACF and PACF
+```{r 6Aiii}
+#Combines plots
+graph <- par(mfrow = c(1,2)) 
+# Plots sample ACF
+acf(model1,lag.max = 10,main = "")
+# #Plots PACF from h = 0 
+pacf(model1,lag.max = 10,main = "")
+title(expression(paste("Sample ARMA(1,1) ",phi == -0.6,theta == 1.2,sep = " ")),
+line = -1, outer=TRUE)
+#Plots sample ACF and PACF on one graph
+par(graph)
+```
+
+####iv. Smoothness analysis
+
+###6B
+####i. 100 simulations
+```{r 6bi}
+#Assigns model 2 to arima simulation with phi(1) = -0.2 and phi(2) = 0.48
+model2 <- arima.sim(n = 100,model = list(ar = c(-0.2,0.48)))
+#Plots time series for model 2
+plot(model2, xlab = "Time",ylab = expression(X[t]),main = expression(paste(AR(2),phi [1] == -0.2, phi [2] == 0.48,sep = " "))) 
+```
+
+####ii. Theoritical ACF and PACF
+```{r Problem 6Bii}
+#Computes and outputs ACF and PACF values of Model 2
+acf_model2 = ARMAacf(ar = c(-0.2, 0.48), pacf = FALSE,lag.max = 10)
+pacf_model2 = ARMAacf(ar = c(-0.2, 0.48), pacf = TRUE,lag.max = 10)
+acf_model2
+pacf_model2
+
+# Plot
+graph <- par(mfrow = c(1,2)) #Combines plots
+# Plots ACF 
+plot(x = 0:10,y = acf_model2,type = "h",col = "red",ylab = "ACF",xlab = "h")
+abline(h = 0)
+#Plots PACF from h = 0 
+plot(x = 1:10,y = pacf_model2,type = "h",col = "red",ylab = "PACF",xlab = "h") 
+abline(h = 0)
+title(expression(paste("Theoritical AR(2)",phi [1] == -0.2, phi[2] == 0.48,sep = " ")),
+line = -1, outer=TRUE)
+#Plots ACF and PACF on one graph
+par(graph)
+```
+####iii. Sample ACF and PACF
+```{r 6Biii}
+graph <- par(mfrow = c(1,2)) #Combines plots
+# Plots sample ACF
+acf(model2,lag.max = 10,main = "")
+# #Plots PACF from h = 0 
+pacf(model2,lag.max = 10,main = "")
+title(expression(paste("Sample AR(2): ",phi [1] == -0.2, phi [2] == 0.48,sep = " ")),
+line = -1, outer=TRUE)
+#Plots sample ACF and PACF on one graph
+par(graph)
+```
+####iv. Smoothness analysis

@@ -1,0 +1,37 @@
+---
+title: "Time Series Homework 2"
+author: "Idris Rasheed"
+date: "April 18, 2017"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r Problem 1 - iii}
+library(tseries)
+ma1 <- arima.sim(model=list(ma=c(-0.5)), n=200)
+plot(ma1)
+acf(ma1, type="correlation", plot=T)
+plot(0:20, ARMAacf(ar=c(0), ma=c(-0.5), lag.max=20), xlim=c(1,40),ylab="r",type="h", main="ACF for
+MA(1) c=-0.5")
+abline (h=0)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r Problem 3ii}
+ma2 <- arima.sim(model=list(ma=c(2,-8)), n=300)
+plot(ma2)
+acf(ma2, type="correlation", plot=T)
+plot(0:20, ARMAacf(ar=c(0), ma=c(2,-8), lag.max=20), xlim=c(1,40),ylab="r",type="h", main="ACF for
+MA(2) c=2,-8")
+abline (h=0)
+```
+
+N

@@ -1,0 +1,94 @@
+---
+title: "PSTAT 174 HW 4 R Code"
+author: "Idris Rasheed"
+date: "May 4, 2017"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+###Problem 4
+(a) Plot the time series and find its mean, variance, acf and pacf. Notice the presence of a strong seasonal component with period 12 in the graphs of the data and in the sample acf. Comment on all plots.
+```{r Series Plot}
+#Opens tools from tseries package
+library(tseries)
+#reads in deaths dataset
+deaths = read.table("deaths.txt", sep = ",")
+#Plot time series for deaths
+ts.plot(deaths)
+title(expression(paste("Series")), line = -1, outer=TRUE)
+```
+
+```{r ACF and PACF}
+#Makes deaths txt a time series object
+deaths_ts <- ts(deaths)
+#combines plots
+graph <- par(mfrow = c(1,2))
+#Plots ACF for deaths data
+acf(deaths_ts)
+#Plots PACF
+pacf(deaths_ts)
+title(expression(paste("Deaths")), line = -1, outer=TRUE)
+#Plots ACF and PACG sibe by side
+par(graph)
+```
+
+```{r Mean}
+#computes Mean
+mean(deaths_ts)
+```
+
+```{r Variance}
+#Computes Variance 
+var(deaths)
+```
+
+(b) Use differencing to deseasonalize and detrend the data. On each step include graphs of the
+data, corresponding variance, acf and pacf, and comment on your decisions to difference (or not)
+and at what lag.
+
+```{r differencing 1}
+#Differencing at lag 1
+dif_lag_one <- diff(deaths_ts, lag = 1)
+ts.plot(dif_lag_one ,main = "Differenced Deaths at lag = 1")
+```
+
+```{r Var of Dif 1}
+var(dif_lag_one)
+```
+
+```{r differencing 1}
+#combines plots
+graph <- par(mfrow = c(1,2))
+#Plots ACF for difference at lag 1
+acf(dif_lag_one)
+#Plots PACF for difference at lag 1
+pacf(dif_lag_one)
+title(expression(paste("Difference at Lag 1")), line = -1, outer=TRUE)
+#Plots ACF and PACG sibe by side
+par(graph)
+```
+
+```{r differencing 2}
+#Differencing at lag 2
+dif_lag_two <- diff(deaths_ts, lag = 2)
+ts.plot(dif_lag_two ,main = "Differenced Deaths at lag = 2")
+```
+
+```{r Var of Dif 2}
+var(dif_lag_two)
+```
+
+```{r differencing 2}
+#combines plots
+graph <- par(mfrow = c(1,2))
+#Plots ACF for difference at lag 1
+acf(dif_lag_two)
+#Plots PACF for difference at lag 1
+pacf(dif_lag_two)
+title(expression(paste("Difference at Lag 2")), line = -1, outer=TRUE)
+#Plots ACF and PACG sibe by side
+par(graph)
+```

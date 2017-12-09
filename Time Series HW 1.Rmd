@@ -1,0 +1,28 @@
+library(tseries)
+# Simulate Gaussian white noise, find the sample acf, and compare with theoretical acf
+x <- rnorm(300, 0, 1)
+
+# Calculate and plot sample acf
+myacf = acf(x,plot=FALSE)
+
+
+# Simulate from an MA(1) process, e.g. X_t = Z_t + .8 Z_{t-1}
+y <- arima.sim(list(ma=1), n = 300, sd = 1)
+acf(y)
+
+#(b) Solve the given system of equations using R:
+#(i) Create the matrix A and the vector b defined in part (a) in R. Hint: Look at the lab 1 files.
+#(ii) Run �solve(A)� in R to calculate A-1
+#(iii) Compute A-1b in R.> B = matrix( + c(2, 4, 3, 1, 5, 7), + nrow=3, + ncol=2) > B # B has 3 rows and 2 columns. ...
+
+A <- matrix(c(6, 4, -2, 1, -1, 2, -2, 1, -1), #list of elements
+            nrow = 3, #3 rows
+            ncol = 3, #3 columns
+            byrow = TRUE) #compile by rows
+
+b <- c(2,-1,0) #Set b as this vector elements
+
+A_inv <- solve(A) #Compute the inverse matrix
+
+x <- A_inv*b #Computes x
+x 
